@@ -12,103 +12,65 @@
 
 <div class="container">
     <div class="page-header">
-        <h1>OMAR PEREDA</h1>
+        <h1 th:text="${titulo}"></h1>
     </div>
 
     <div class="row">
+        <div class="col-md-6">
 
-        <!-- ================= PANEL VERDE ================= -->
-        <div class="col-md-6" th:if="${!mostrarRoja}">
-            <div class="panel with-nav-tabs panel-success">
+            <div class="panel with-nav-tabs"
+                 th:classappend="${mostrarRoja} ? ' panel-danger' : ' panel-success'">
+
                 <div class="panel-heading">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a href="#s-nombre" data-toggle="tab">Nombre</a></li>
-                        <li><a href="#s-edad" data-toggle="tab">Edad</a></li>
-                        <li><a href="#s-comida" data-toggle="tab">Comida fav</a></li>
+
+                        <!-- Tabs normales -->
+                        <li th:each="t,stat : ${tabs}"
+                            th:if="${t.dropdown == 'false'}"
+                            th:classappend="${stat.index==0} ? ' active'">
+
+                            <a th:href="'#tab-'+${t.id}"
+                               data-toggle="tab"
+                               th:text="${t.categoria}">
+                            </a>
+                        </li>
+
+                        <!-- Dropdown -->
                         <li class="dropdown">
-                            <a href="#" data-toggle="dropdown">Más <span class="caret"></span></a>
+                            <a href="#" data-toggle="dropdown">
+                                Más <span class="caret"></span>
+                            </a>
+
                             <ul class="dropdown-menu">
-                                <li><a href="#s-carro" data-toggle="tab">Carro</a></li>
-                                <li><a href="#s-marca" data-toggle="tab">Marca fav</a></li>
-                                <li><a href="#s-cancion" data-toggle="tab">Canción fav</a></li>
-                                <li><a href="#s-artista" data-toggle="tab">Artista fav</a></li>
-                                <li><a href="#s-promedio" data-toggle="tab">Promedio</a></li>
-                                <li><a href="#s-materia" data-toggle="tab">Materia fav</a></li>
-                                <li><a href="#s-empleo" data-toggle="tab">Cuenta con empleo</a></li>
-                                <li><a href="#s-hijos" data-toggle="tab">Tiene hijos</a></li>
-                                <li><a href="#s-estudia" data-toggle="tab">Estudia</a></li>
-                                <li><a href="#s-asi" data-toggle="tab">Asi</a></li>
+                                <li th:each="t : ${tabs}"
+                                    th:if="${t.dropdown == 'true'}">
+
+                                    <a th:href="'#tab-'+${t.id}"
+                                       data-toggle="tab"
+                                       th:text="${t.categoria}">
+                                    </a>
+                                </li>
                             </ul>
                         </li>
+
                     </ul>
                 </div>
 
                 <div class="panel-body">
                     <div class="tab-content">
-                        <div class="tab-pane fade in active" id="s-nombre">Omar</div>
-                        <div class="tab-pane fade" id="s-edad">20 años</div>
-                        <div class="tab-pane fade" id="s-comida">Alitas</div>
-                        <div class="tab-pane fade" id="s-carro">Ninguno ;(</div>
-                        <div class="tab-pane fade" id="s-marca">Apple</div>
-                        <div class="tab-pane fade" id="s-cancion">Possibly Maybe</div>
-                        <div class="tab-pane fade" id="s-artista">Rosalía</div>
-                        <div class="tab-pane fade" id="s-promedio">9.2</div>
-                        <div class="tab-pane fade" id="s-materia">Cálculo</div>
-                        <div class="tab-pane fade" id="s-empleo">Sí</div>
-                        <div class="tab-pane fade" id="s-hijos">No</div>
-                        <div class="tab-pane fade" id="s-estudia">Sí</div>
-                        <div class="tab-pane fade" id="s-asi">Foryu</div>
+
+                        <div th:each="t,stat : ${tabs}"
+                             class="tab-pane fade"
+                             th:classappend="${stat.index==0} ? ' in active'"
+                             th:id="'tab-'+${t.id}"
+                             th:text="${t.valor}">
+                        </div>
+
                     </div>
                 </div>
+
             </div>
         </div>
-
-        <!-- ================= PANEL ROJO ================= -->
-        <div class="col-md-6" th:if="${mostrarRoja}">
-            <div class="panel with-nav-tabs panel-danger">
-                <div class="panel-heading">
-                    <ul class="nav nav-tabs">
-                        <li class="active"><a href="#r-nombre" data-toggle="tab">Nombre</a></li>
-                        <li><a href="#r-edad" data-toggle="tab">Edad</a></li>
-                        <li><a href="#r-comida" data-toggle="tab">Comida fav</a></li>
-                        <li class="dropdown">
-                            <a href="#" data-toggle="dropdown">Más <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#r-carro" data-toggle="tab">Carro</a></li>
-                                <li><a href="#r-marca" data-toggle="tab">Marca fav</a></li>
-                                <li><a href="#r-cancion" data-toggle="tab">Canción fav</a></li>
-                                <li><a href="#r-artista" data-toggle="tab">Artista fav</a></li>
-                                <li><a href="#r-promedio" data-toggle="tab">Promedio</a></li>
-                                <li><a href="#r-materia" data-toggle="tab">Materia fav</a></li>
-                                <li><a href="#r-empleo" data-toggle="tab">Cuenta con empleo</a></li>
-                                <li><a href="#r-hijos" data-toggle="tab">Tiene hijos</a></li>
-                                <li><a href="#r-estudia" data-toggle="tab">Estudia</a></li>
-                                <li><a href="#r-asi" data-toggle="tab">Asi</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="panel-body">
-                    <div class="tab-content">
-                        <div class="tab-pane fade in active" id="r-nombre">Omar</div>
-                        <div class="tab-pane fade" id="r-edad">20 años</div>
-                        <div class="tab-pane fade" id="r-comida">Alitas</div>
-                        <div class="tab-pane fade" id="r-carro">Ninguno</div>
-                        <div class="tab-pane fade" id="r-marca">Apple</div>
-                        <div class="tab-pane fade" id="r-cancion">Possibly Maybe</div>
-                        <div class="tab-pane fade" id="r-artista">Rosalía</div>
-                        <div class="tab-pane fade" id="r-promedio">9.2</div>
-                        <div class="tab-pane fade" id="r-materia">Cálculo</div>
-                        <div class="tab-pane fade" id="r-empleo">Sí</div>
-                        <div class="tab-pane fade" id="r-hijos">No</div>
-                        <div class="tab-pane fade" id="r-estudia">Sí</div>
-                        <div class="tab-pane fade" id="r-asi">Foryu</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
     </div>
 </div>
 
